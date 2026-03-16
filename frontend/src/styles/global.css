@@ -1,0 +1,147 @@
+/* ===== VARIABLES DEL SISTEMA ===== */
+:root {
+  --color-primario: #5C3D1E;       /* Café oscuro */
+  --color-secundario: #8B5E3C;     /* Café medio */
+  --color-acento: #D4A853;         /* Dorado */
+  --color-fondo: #FDF6EC;          /* Crema claro */
+  --color-fondo-card: #FAF0DC;     /* Crema cálido */
+  --color-texto: #2C1A0E;          /* Café muy oscuro */
+  --color-texto-suave: #7A5C3C;    /* Café suave */
+  --color-borde: #D4B896;          /* Borde cálido */
+  --color-exito: #4CAF50;
+  --color-error: #E53935;
+  --color-alerta: #FF9800;
+
+  --fuente-titulo: 'Playfair Display', serif;
+  --fuente-cuerpo: 'Lato', sans-serif;
+
+  --sombra-suave: 0 2px 8px rgba(92, 61, 30, 0.12);
+  --sombra-media: 0 4px 16px rgba(92, 61, 30, 0.18);
+  --radio: 8px;
+  --radio-grande: 12px;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fuente-cuerpo);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  min-height: 100vh;
+}
+
+/* ===== TIPOGRAFÍA ===== */
+h1, h2, h3 {
+  font-family: var(--fuente-titulo);
+  color: var(--color-primario);
+}
+
+/* ===== BOTONES ===== */
+.btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: var(--radio);
+  cursor: pointer;
+  font-family: var(--fuente-cuerpo);
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-primario {
+  background-color: var(--color-primario);
+  color: #fff;
+}
+.btn-primario:hover {
+  background-color: var(--color-secundario);
+}
+
+.btn-acento {
+  background-color: var(--color-acento);
+  color: var(--color-texto);
+}
+.btn-acento:hover {
+  filter: brightness(0.92);
+}
+
+.btn-secundario {
+  background-color: transparent;
+  color: var(--color-primario);
+  border: 2px solid var(--color-borde);
+}
+.btn-secundario:hover {
+  background-color: var(--color-fondo-card);
+}
+
+.btn-peligro {
+  background-color: var(--color-error);
+  color: #fff;
+}
+
+/* ===== INPUTS ===== */
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--color-borde);
+  border-radius: var(--radio);
+  font-family: var(--fuente-cuerpo);
+  font-size: 14px;
+  background-color: #fff;
+  color: var(--color-texto);
+  transition: border-color 0.2s;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--color-acento);
+}
+
+/* ===== TABLAS ===== */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.tabla th {
+  background-color: var(--color-primario);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-family: var(--fuente-titulo);
+  font-weight: 500;
+}
+.tabla td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--color-borde);
+}
+.tabla tr:nth-child(even) td {
+  background-color: var(--color-fondo-card);
+}
+.tabla tr:hover td {
+  background-color: #F0E0C0;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--color-fondo-card);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-grande);
+  padding: 24px;
+  box-shadow: var(--sombra-suave);
+}
+
+/* ===== BADGE ESTADO ===== */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge-entregado   { background: #C8E6C9; color: #2E7D32; }
+.badge-pendiente   { background: #FFF9C4; color: #F57F17; }
+.badge-no-entregado { background: #FFCDD2; color: #B71C1C; }

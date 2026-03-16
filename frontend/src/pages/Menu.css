@@ -1,0 +1,66 @@
+.menu-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.menu-header {
+  text-align: center;
+}
+
+.menu-escudo {
+  font-size: 64px;
+  margin-bottom: 8px;
+}
+
+.menu-header h1 {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.menu-header p {
+  color: var(--color-texto-suave);
+  font-size: 15px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.modulo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modulo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1.5px solid var(--color-borde);
+  padding-bottom: 12px;
+}
+
+.modulo-icono {
+  font-size: 24px;
+}
+
+.modulo-titulo h2 {
+  font-size: 18px;
+}
+
+.modulo-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modulo-btn {
+  text-align: left;
+  font-size: 14px;
+}
