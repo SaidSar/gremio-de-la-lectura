@@ -10,6 +10,7 @@ const MODULOS = [
       { label: 'Administración de clientes', path: '/clientes/admin' },
     ],
   },
+  
   {
     titulo: 'Libros',
     icono: '📖',
@@ -20,6 +21,7 @@ const MODULOS = [
       { label: 'Alta de libros', path: '/libros/alta' },
     ],
   },
+
   {
     titulo: 'Inventario',
     icono: '📦',
@@ -28,6 +30,7 @@ const MODULOS = [
       { label: 'Alta de libros',  path: '/libros/alta' },
     ],
   },
+  
 ]
 
 export default function Menu() {

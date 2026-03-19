@@ -25,7 +25,6 @@ function RutaProtegida({ children }) {
 export default function App() {
   return (
     <Routes>
-      {/* Pública */}
       <Route path="/" element={<Login />} />
 
       {/* Protegidas */}

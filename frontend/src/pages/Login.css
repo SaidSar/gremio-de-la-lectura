@@ -3,11 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #3B2010 0%, #7A4A22 50%, #C9893A 100%);
+  background: #fefdeb
 }
 
 .login-card {
-  background: var(--color-fondo-card);
+  background: #fefdeb;
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-grande);
   padding: 40px 48px;

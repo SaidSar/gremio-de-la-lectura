@@ -1,0 +1,197 @@
+CREATE DATABASE GremioDB;
+GO
+
+USE GremioDB;
+GO
+
+---------------------------------tablas----------------------------------------
+
+CREATE TABLE Usuarios (
+    id_usuario INT PRIMARY KEY IDENTITY(1,1),
+    usuario NVARCHAR(50) NOT NULL UNIQUE,
+    contraseña NVARCHAR(255) NOT NULL,
+    rol NVARCHAR(20) NOT NULL, -- admin, empleado, etc
+    fecha_creacion DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Clientes (
+    id_cliente INT PRIMARY KEY IDENTITY(1,1),
+    nombrecompleto NVARCHAR(200) NOT NULL,
+    telefono NVARCHAR(20),
+    correo NVARCHAR(100),
+    fecha_registro DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Libros (
+    id_libro INT PRIMARY KEY IDENTITY(1,1),
+    titulo NVARCHAR(200) NOT NULL,
+    autor NVARCHAR(150),
+    editorial NVARCHAR(150),
+    año INT,
+    isbn NVARCHAR(50),
+    categoria NVARCHAR(100)
+);
+
+CREATE TABLE Inventario (
+    id_inventario INT PRIMARY KEY IDENTITY(1,1),
+    id_libro INT,
+    cantidad_total INT NOT NULL,
+    cantidad_disponible INT NOT NULL,
+    FOREIGN KEY (id_libro) REFERENCES Libros(id_libro)
+);
+
+CREATE TABLE Prestamos (
+    id_prestamo INT PRIMARY KEY IDENTITY(1,1),
+    id_cliente INT,
+    id_usuario INT,
+    fecha_prestamo DATETIME DEFAULT GETDATE(),
+    fecha_limite DATETIME,
+    estado NVARCHAR(20) DEFAULT 'Activo',
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
+);
+
+CREATE TABLE DetallePrestamo (
+    id_detalle INT PRIMARY KEY IDENTITY(1,1),
+    id_prestamo INT,
+    id_libro INT,
+    cantidad INT NOT NULL,
+    FOREIGN KEY (id_prestamo) REFERENCES Prestamos(id_prestamo),
+    FOREIGN KEY (id_libro) REFERENCES Libros(id_libro)
+);
+
+CREATE TABLE Devoluciones (
+    id_devolucion INT PRIMARY KEY IDENTITY(1,1),
+    id_prestamo INT,
+    fecha_devolucion DATETIME DEFAULT GETDATE(),
+    estado NVARCHAR(20), -- Completo, Parcial
+    FOREIGN KEY (id_prestamo) REFERENCES Prestamos(id_prestamo)
+);
+
+ALTER TABLE Clientes
+ADD es_deudor BIT DEFAULT 0,
+    total_retardos INT DEFAULT 0;
+
+CREATE TABLE HistorialRetardos (
+    id_retardo INT PRIMARY KEY IDENTITY(1,1),
+    id_cliente INT,
+    id_prestamo INT,
+    dias_retraso INT,
+    fecha_registro DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
+    FOREIGN KEY (id_prestamo) REFERENCES Prestamos(id_prestamo)
+);
+
+------------------------------triggers---------------------------------
+
+--CREATE TRIGGER trg_detectar_retardo
+--ON Devoluciones
+--AFTER INSERT
+--AS
+--BEGIN
+--    DECLARE @id_prestamo INT;
+--    DECLARE @fecha_devolucion DATETIME;
+--    DECLARE @fecha_limite DATETIME;
+--    DECLARE @id_cliente INT;
+--    DECLARE @dias_retraso INT;
+
+--    SELECT 
+--        @id_prestamo = i.id_prestamo,
+--        @fecha_devolucion = i.fecha_devolucion
+--    FROM inserted i;
+
+--    SELECT 
+--        @fecha_limite = p.fecha_limite,
+--        @id_cliente = p.id_cliente
+--    FROM Prestamos p
+--    WHERE p.id_prestamo = @id_prestamo;
+
+--    -- Calcular días de retraso
+--    SET @dias_retraso = DATEDIFF(DAY, @fecha_limite, @fecha_devolucion);
+
+--    IF @dias_retraso > 0
+--    BEGIN
+--        -- Registrar retardo
+--        INSERT INTO HistorialRetardos (id_cliente, id_prestamo, dias_retraso)
+--        VALUES (@id_cliente, @id_prestamo, @dias_retraso);
+
+--        -- Actualizar contador
+--        UPDATE Clientes
+--        SET total_retardos = total_retardos + 1
+--        WHERE id_cliente = @id_cliente;
+
+--        -- Marcar como deudor si supera límite (ejemplo: 3 retardos)
+--        UPDATE Clientes
+--        SET es_deudor = 1
+--        WHERE id_cliente = @id_cliente AND total_retardos >= 3;
+--    END
+--END;
+
+--SELECT 
+--    c.nombre,
+--    p.id_prestamo,
+--    h.dias_retraso,
+--    h.fecha_registro
+--FROM HistorialRetardos h
+--JOIN Clientes c ON c.id_cliente = h.id_cliente
+--JOIN Prestamos p ON p.id_prestamo = h.id_prestamo
+--WHERE c.id_cliente = 1;
+
+
+
+-- Validación antes de préstamo
+
+--SELECT es_deudor 
+--FROM Clientes
+--WHERE id_cliente = @id_cliente;
+
+--------------------------------datos----------------------------------
+
+INSERT INTO Usuarios (usuario, contraseña, rol) VALUES
+('admin', '1234', 'admin'),
+('empleado1', '1234', 'empleado'),
+('empleado2', '1234', 'empleado');
+
+INSERT INTO Clientes (nombrecompleto, telefono, correo) VALUES
+('Juan Perez', '6681111111', 'juan@mail.com'),
+('Maria Lopez', '6682222222', 'maria@mail.com'),
+('Carlos Ramirez', '6683333333', 'carlos@mail.com'),
+('Ana Torres', '6684444444', 'ana@mail.com'),
+('Luis Gomez', '6685555555', 'luis@mail.com');
+
+INSERT INTO Libros (titulo, autor, editorial, año, isbn, categoria) VALUES
+('El Principito', 'Antoine de Saint-Exupéry', 'Salamandra', 1943, '9780156012195', 'Ficción'),
+('Cien Años de Soledad', 'Gabriel García Márquez', 'Diana', 1967, '9780307474728', 'Realismo mágico'),
+('1984', 'George Orwell', 'Debolsillo', 1949, '9780451524935', 'Distopía'),
+('Don Quijote de la Mancha', 'Miguel de Cervantes', 'Espasa', 1605, '9788420412146', 'Clásico'),
+('Harry Potter y la Piedra Filosofal', 'J.K. Rowling', 'Salamandra', 1997, '9788478884452', 'Fantasía');
+
+INSERT INTO Inventario (id_libro, cantidad_total, cantidad_disponible) VALUES
+(1, 10, 8),
+(2, 5, 5),
+(3, 7, 6),
+(4, 3, 2),
+(5, 12, 10);
+
+INSERT INTO Prestamos (id_cliente, id_usuario, fecha_prestamo, fecha_limite, estado) VALUES
+(1, 2, '2026-03-01', '2026-03-05', 'Devuelto'), -- retraso
+(2, 2, '2026-03-10', '2026-03-15', 'Activo'),
+(3, 3, '2026-03-05', '2026-03-12', 'Devuelto'), -- a tiempo
+(1, 2, '2026-03-08', '2026-03-12', 'Devuelto'), -- retraso
+(4, 3, '2026-03-12', '2026-03-18', 'Activo');
+
+INSERT INTO DetallePrestamo (id_prestamo, id_libro, cantidad) VALUES
+(1, 1, 1),
+(1, 3, 1),
+(2, 2, 1),
+(3, 4, 1),
+(4, 5, 1),
+(5, 1, 1);
+
+INSERT INTO Devoluciones (id_prestamo, fecha_devolucion, estado) VALUES
+(1, '2026-03-08', 'Completo'), -- 3 días tarde
+(3, '2026-03-10', 'Completo'), -- a tiempo
+(4, '2026-03-15', 'Completo'); -- retraso
+
+SELECT * FROM HistorialRetardos;
+SELECT nombrecompleto, total_retardos, es_deudor FROM Clientes;
