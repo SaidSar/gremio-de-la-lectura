@@ -6,43 +6,35 @@ export default function Login() {
   const navigate = useNavigate()
   const [form, setForm] = useState({ usuario: '', contrasena: '' })
   const [error, setError] = useState('')
-  const [cargando, setCargando] = useState(false)
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
-    setCargando(true)
     setError('')
 
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-
-      if (!res.ok) {
-        setError('Usuario o contraseña incorrectos.')
-        return
-      }
-
-      const data = await res.json()
-      localStorage.setItem('token', data.token)
+    if (form.usuario === 'admin' && form.contrasena === '123') {
+      localStorage.setItem('token', 'demo-admin')
+      localStorage.setItem('rol', 'admin')
       navigate('/menu')
-    } catch {
-      setError('No se pudo conectar con el servidor.')
-    } finally {
-      setCargando(false)
+      return
     }
+
+    if (form.usuario === 'empleado' && form.contrasena === '123') {
+      localStorage.setItem('token', 'demo-empleado')
+      localStorage.setItem('rol', 'empleado')
+      navigate('/menu')
+      return
+    }
+
+    setError('Usuario o contraseña incorrectos.')
   }
 
   return (
     <div className="login-bg">
       <div className="login-card">
-        {/* Logo / nombre */}
         <div className="login-logo">
           <div className="login-escudo">📚</div>
           <h1>El Gremio de la Lectura</h1>
@@ -78,12 +70,8 @@ export default function Login() {
 
           {error && <p className="login-error">{error}</p>}
 
-          <button
-            type="submit"
-            className="btn btn-primario login-btn"
-            disabled={cargando}
-          >
-            {cargando ? 'Ingresando...' : 'Ingresar'}
+          <button type="submit" className="btn btn-primario login-btn">
+            Ingresar
           </button>
         </form>
       </div>
