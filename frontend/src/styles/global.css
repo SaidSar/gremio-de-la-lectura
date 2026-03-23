@@ -3,6 +3,17 @@
   --color-primario: #5C3D1E;       /* Café oscuro */
   --color-secundario: #8B5E3C;     /* Café medio */
   --color-acento: #D4A853;         /* Dorado */
+
+  /*=========colores acordados======*/
+  --color-label: #ffd791; 
+  --color-fondos: #fefdeb;
+  --color-inputs:#d3dcf9;
+  --color-botones:#99d5ff;
+  --color-menus:#6d4c3d;
+  --color-no-entregado:#ff3c3c;
+  --color-entregado:#4bd759;
+  --color-por-entregado:#ffd83a;
+
   --color-fondo: #FDF6EC;          /* Crema claro */
   --color-fondo-card: #FAF0DC;     /* Crema cálido */
   --color-texto: #2C1A0E;          /* Café muy oscuro */
@@ -125,6 +136,12 @@ h1, h2, h3 {
   background-color: #F0E0C0;
 }
 
+/* =========== Label ============= */ 
+.label{
+  background-color: var(--color-label);
+  color: black;
+  font-size: medium;
+}
 /* ===== CARDS ===== */
 .card {
   background: var(--color-fondo-card);

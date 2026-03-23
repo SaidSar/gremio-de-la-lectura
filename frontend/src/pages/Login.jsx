@@ -44,18 +44,18 @@ export default function Login() {
       <div className="login-card">
         {/* Logo / nombre */}
         <div className="login-logo">
-          <div className="login-escudo">📚</div>
+          <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src='assets\GremioLogo.jpeg'/> </div>
           <h1>El Gremio de la Lectura</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
-          <div className="campo">
-            <label htmlFor="usuario">Usuario:</label>
+          <div className="campo" >
+            <label htmlFor="usuario" className='label' style={{  maxWidth:'30%'}}>Usuario:</label>
             <input
               id="usuario"
               name="usuario"
               className="input"
-              placeholder="Ejemplo23"
+              placeholder="Introducir Usuario"
               value={form.usuario}
               onChange={handleChange}
               required
@@ -63,13 +63,13 @@ export default function Login() {
           </div>
 
           <div className="campo">
-            <label htmlFor="contrasena">Contraseña:</label>
+            <label htmlFor="contrasena" className='label' style={{  maxWidth:'30%' }}>Contraseña:</label>
             <input
               id="contrasena"
               name="contrasena"
               type="password"
               className="input"
-              placeholder="••••••••"
+              placeholder="Introducir Contraseña"
               value={form.contrasena}
               onChange={handleChange}
               required

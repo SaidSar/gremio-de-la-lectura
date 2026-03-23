@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fefdeb
+  background: #fefdeb;
+  color: black;
 }
 
 .login-card {
@@ -60,4 +61,5 @@
   padding: 10px;
   font-size: 15px;
   margin-top: 4px;
+  
 }

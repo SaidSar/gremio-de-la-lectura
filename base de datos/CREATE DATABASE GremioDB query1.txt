@@ -7,7 +7,7 @@ GO
 ---------------------------------tablas----------------------------------------
 
 CREATE TABLE Usuarios (
-    id_usuario INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     usuario NVARCHAR(50) NOT NULL UNIQUE,
     contraseña NVARCHAR(255) NOT NULL,
     rol NVARCHAR(20) NOT NULL, -- admin, empleado, etc
@@ -15,7 +15,7 @@ CREATE TABLE Usuarios (
 );
 
 CREATE TABLE Clientes (
-    id_cliente INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     nombrecompleto NVARCHAR(200) NOT NULL,
     telefono NVARCHAR(20),
     correo NVARCHAR(100),
@@ -23,7 +23,7 @@ CREATE TABLE Clientes (
 );
 
 CREATE TABLE Libros (
-    id_libro INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     titulo NVARCHAR(200) NOT NULL,
     autor NVARCHAR(150),
     editorial NVARCHAR(150),
@@ -33,7 +33,7 @@ CREATE TABLE Libros (
 );
 
 CREATE TABLE Inventario (
-    id_inventario INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     id_libro INT,
     cantidad_total INT NOT NULL,
     cantidad_disponible INT NOT NULL,
@@ -41,18 +41,19 @@ CREATE TABLE Inventario (
 );
 
 CREATE TABLE Prestamos (
-    id_prestamo INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     id_cliente INT,
     id_usuario INT,
     fecha_prestamo DATETIME DEFAULT GETDATE(),
     fecha_limite DATETIME,
+	FechaDevolucion DATETIME,
     estado NVARCHAR(20) DEFAULT 'Activo',
     FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
 CREATE TABLE DetallePrestamo (
-    id_detalle INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     id_prestamo INT,
     id_libro INT,
     cantidad INT NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE DetallePrestamo (
 );
 
 CREATE TABLE Devoluciones (
-    id_devolucion INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     id_prestamo INT,
     fecha_devolucion DATETIME DEFAULT GETDATE(),
     estado NVARCHAR(20), -- Completo, Parcial
@@ -73,7 +74,7 @@ ADD es_deudor BIT DEFAULT 0,
     total_retardos INT DEFAULT 0;
 
 CREATE TABLE HistorialRetardos (
-    id_retardo INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY IDENTITY(1,1),
     id_cliente INT,
     id_prestamo INT,
     dias_retraso INT,
