@@ -1,26 +1,22 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Login.css'
+import { Loguear } from '../services/Usuario'
 
 export default function Login() {
   const navigate = useNavigate()
   const [form, setForm] = useState({ usuario: '', contrasena: '' })
   const [error, setError] = useState('')
+  const [usuario, setusuario] = useState()
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
-    if (form.usuario === 'admin' && form.contrasena === '123') {
-      localStorage.setItem('token', 'demo-admin')
-      localStorage.setItem('rol', 'admin')
-      navigate('/menu')
-      return
-    }
 
     if (form.usuario === 'empleado' && form.contrasena === '123') {
       localStorage.setItem('token', 'demo-empleado')
@@ -29,6 +25,15 @@ export default function Login() {
       return
     }
 
+    const data = await Loguear(form.usuario, form.contrasena);
+    if( data != null){
+      console.log(data)
+      if(data.id == 0 || data.id == -1 ){
+        console.log(usuario)
+        return
+      }
+      navigate('/menu')
+    }
     setError('Usuario o contraseña incorrectos.')
   }
 

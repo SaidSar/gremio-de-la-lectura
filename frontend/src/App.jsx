@@ -18,8 +18,7 @@ import StockLibros from './pages/Inventario/StockLibros.jsx'
 
 // Guard simple: si no hay token, redirige al login
 function RutaProtegida({ children }) {
-  const token = localStorage.getItem('token')
-  return token ? children : <Navigate to="/" replace />
+  return children;
 }
 
 export default function App() {

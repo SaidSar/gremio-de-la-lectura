@@ -1,8 +1,5 @@
 import api from "./api";
-
-interface Usuario{
-    id:number
-}
+import { Usuario } from "./Tipos";
 
 export const ListarUsuarios = async() => {
     try{
@@ -15,7 +12,7 @@ export const ListarUsuarios = async() => {
 
 export const Loguear = async(usuario:string, contra:string) => {
     try{
-        const {data} = await api.get<Usuario>(`UsuariosCT/login?nombre=${usuario}&pwd=${contra}`)
+        const {data} = await api.get<Usuario>(`Usuarios/login?nombre=${usuario}&pwd=${contra}`)
         return data;
     }catch{
         return null;

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://localhost:7006/',
   headers: { 'Content-Type': 'application/json' },
 })
 
@@ -23,5 +23,6 @@ api.interceptors.response.use(
     return Promise.reject(err)
   }
 )
-
 export default api
+
+
