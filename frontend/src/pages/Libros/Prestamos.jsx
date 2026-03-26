@@ -3,9 +3,7 @@ import { useState } from 'react'
 export default function Prestamos() {
   const [form, setForm] = useState({ codigoCliente: '', titulo: '' })
   const [resultados, setResultados] = useState([
-    { fecha: '3/06/2026',  titulo: 'El libro de la Selva', disponibilidad: 3 },
-    { fecha: '5/06/2026',  titulo: 'El Padrino',           disponibilidad: 5 },
-    { fecha: '06/06/2026', titulo: 'Ejemplo',              disponibilidad: 0 },
+    { fecha: '',  titulo: '', disponibilidad: 0 }
   ])
   const [nombreCliente, setNombreCliente] = useState('(nombre del cliente)')
 

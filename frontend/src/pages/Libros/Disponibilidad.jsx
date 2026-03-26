@@ -3,8 +3,7 @@ import { useState } from 'react'
 export default function Disponibilidad() {
   const [form, setForm] = useState({ codigo: '', titulo: '' })
   const [libros, setLibros] = useState([
-    { codigo: '822fhk', titulo: 'El libro de la Selva', disponibilidad: 5 },
-    { codigo: '6482jd', titulo: 'El Padrino',           disponibilidad: 300 },
+    { codigo: '', titulo: '', disponibilidad: 0 },
   ])
 
   async function buscar(e) {

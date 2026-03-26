@@ -9,9 +9,7 @@ const BADGE = {
 export default function Devoluciones() {
   const [form, setForm] = useState({ codigoCliente: '', nombreCliente: '' })
   const [historial, setHistorial] = useState([
-    { fecha: '3/06/2026',  titulo: 'El libro de la Selva', estado: 'No entregado' },
-    { fecha: '5/06/2026',  titulo: 'El Padrino',           estado: 'Entregado' },
-    { fecha: '06/06/2026', titulo: 'Ejemplo',              estado: 'Por entregar' },
+    { fecha: '',  titulo: '', estado: '' }
   ])
 
   async function buscar(e) {
