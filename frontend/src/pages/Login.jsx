@@ -30,9 +30,8 @@ export default function Login() {
       console.log(data)
       if(data.id == 0 || data.id == -1 ){
         console.log(usuario)
-        return
       }
-      navigate('/menu')
+      else{navigate('/menu')}
     }
     setError('Usuario o contraseña incorrectos.')
   }
