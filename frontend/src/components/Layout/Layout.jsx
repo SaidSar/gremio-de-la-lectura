@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import './Layout.css'
+import logo from '../assets/GremioLogo.jpeg'
 
 const RUTAS = [
   { label: 'Menú Principal', path: '/menu' },
@@ -62,7 +63,7 @@ export default function Layout({ children }) {
       {modalSalir && (
         <div className="modal-overlay" onClick={() => setModalSalir(false)}>
           <div className="modal-card modal-salir" onClick={e => e.stopPropagation()}>
-            <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src='../../assets/GremioLogo.jpeg'/> </div>
+            <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src={logo}/> </div>
             <h2>¿Cerrar sesión?</h2>
             <p className="modal-subtitulo">Se cerrará tu sesión actual y regresarás al inicio.</p>
             <div className="modal-salir-botones">
@@ -82,7 +83,7 @@ export default function Layout({ children }) {
         <div className="modal-overlay" onClick={() => setModalAbierto(false)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
             <button className="modal-cerrar" onClick={() => setModalAbierto(false)}>✕</button>
-            <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src='../../assets/GremioLogo.jpeg'/> </div>
+            <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src={logo}/> </div>
             <h2>El Gremio de la Lectura</h2>
             <p className="modal-subtitulo">Sistema de Gestión Bibliotecaria</p>
 
