@@ -39,7 +39,7 @@ export default function Menu() {
   return (
     <div className="menu-page">
       <div className="menu-header">
-        <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src='assets\GremioLogo.jpeg'/> </div>
+        <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src='/src/assets/GremioLogo.jpeg'/> </div>
         <h1>El Gremio de la Lectura</h1>
         <p>Selecciona un módulo para comenzar</p>
       </div>
