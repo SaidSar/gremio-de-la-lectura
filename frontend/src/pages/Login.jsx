@@ -40,7 +40,7 @@ export default function Login() {
     <div className="login-bg">
       <div className="login-card">
         <div className="login-logo">
-          <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src='/src/assets/GremioLogo.jpeg'/> </div>
+          <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src='../../assets/GremioLogo.jpeg'/> </div>
           <h1>El Gremio de la Lectura</h1>
         </div>
 
