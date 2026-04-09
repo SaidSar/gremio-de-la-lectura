@@ -1,0 +1,149 @@
+.catalogo-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.catalogo-buscador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 2px solid var(--color-borde);
+  border-radius: 40px;
+  padding: 10px 20px;
+  box-shadow: var(--sombra-suave);
+}
+
+.buscador-icono { font-size: 18px; }
+
+.buscador-input {
+  border: none;
+  outline: none;
+  font-family: var(--fuente-cuerpo);
+  font-size: 15px;
+  width: 100%;
+  background: transparent;
+  color: var(--color-texto);
+}
+
+.catalogo-notif {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #C8E6C9;
+  color: #2E7D32;
+  padding: 10px 16px;
+  border-radius: var(--radio);
+  font-size: 14px;
+}
+
+.catalogo-notif button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #2E7D32;
+}
+
+.catalogo-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--color-fondo-card);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra-suave);
+}
+
+.libro-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-borde);
+  transition: background 0.15s;
+}
+.libro-item:last-child { border-bottom: none; }
+.libro-item:hover { background: #F0E0C0; }
+
+.libro-portada {
+  font-size: 28px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fondo);
+  border-radius: var(--radio);
+  border: 1px solid var(--color-borde);
+  flex-shrink: 0;
+}
+
+.libro-info {
+  flex: 1;
+}
+
+.libro-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 15px;
+  color: var(--color-primario);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.libro-autor {
+  font-size: 12px;
+  color: var(--color-texto-suave);
+}
+
+.libro-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-prestar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-primario);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.btn-prestar:hover { background: var(--color-secundario); }
+.btn-prestar.no-disponible {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-editar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-borde);
+  background: transparent;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.btn-editar:hover { background: var(--color-borde); }
+
+.catalogo-vacio {
+  padding: 32px;
+  text-align: center;
+  color: var(--color-texto-suave);
+}

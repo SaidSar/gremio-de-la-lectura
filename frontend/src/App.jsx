@@ -16,6 +16,9 @@ import AltaLibros from './pages/Libros/AltaLibros.jsx'
 // Inventario
 import StockLibros from './pages/Inventario/StockLibros.jsx'
 
+// Otras páginas (si las hubiera) se importarían aquí
+import Catalogo from './pages/Catalogo.jsx'
+
 // Guard simple: si no hay token, redirige al login
 function RutaProtegida({ children }) {
   return children;
@@ -51,6 +54,10 @@ export default function App() {
       <Route path="/inventario/stock" element={
         <RutaProtegida><Layout><StockLibros /></Layout></RutaProtegida>
       } />
+      
+      <Route path="/catalogo" element={
+        <RutaProtegida><Layout><Catalogo /></Layout></RutaProtegida>
+      }/>
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />

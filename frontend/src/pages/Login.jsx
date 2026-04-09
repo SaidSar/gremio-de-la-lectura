@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Login.css'
 import { Loguear } from '../services/Usuario'
-import logo from '../assets/GremioLogo.jpeg'
+import logo from "../assets/GremioLogo.jpeg";
 
 export default function Login() {
   const navigate = useNavigate()
@@ -15,27 +15,37 @@ export default function Login() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
+  e.preventDefault()
+  setError('')
 
-
-    if (form.usuario === 'empleado' && form.contrasena === '123') {
-      localStorage.setItem('token', 'demo-empleado')
-      localStorage.setItem('rol', 'empleado')
-      navigate('/menu')
-      return
-    }
-
-    const data = await Loguear(form.usuario, form.contrasena);
-    if( data != null){
-      console.log(data)
-      if(data.id == 0 || data.id == -1 ){
-        console.log(usuario)
-      }
-      else{navigate('/menu')}
-    }
-    setError('Usuario o contraseña incorrectos.')
+  if (form.usuario === 'empleado' && form.contrasena === '123') {
+    localStorage.setItem('token', 'demo-empleado')
+    localStorage.setItem('rol', 'empleado')
+    navigate('/menu')
+    return
   }
+
+  // Usuario normal → catálogo
+  if (form.usuario === 'jac' && form.contrasena === '123') {
+    localStorage.setItem('token', 'demo-usuario')
+    localStorage.setItem('rol', 'usuario')
+    navigate('/catalogo')
+    return
+  }
+
+  const data = await Loguear(form.usuario, form.contrasena);
+  if (data != null) {
+    console.log(data)
+    if (data.id == 0 || data.id == -1) {
+      setError('Usuario o contraseña incorrectos.')
+    } else {
+      navigate('/menu')
+    }
+    return
+  }
+
+  setError('Usuario o contraseña incorrectos.')
+}
 
   return (
     <div className="login-bg">

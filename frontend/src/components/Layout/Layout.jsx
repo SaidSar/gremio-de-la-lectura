@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import './Layout.css'
-import logo from '../assets/GremioLogo.jpeg'
+import logo from "../../assets/GremioLogo.jpeg";
 
 const RUTAS = [
   { label: 'Menú Principal', path: '/menu' },

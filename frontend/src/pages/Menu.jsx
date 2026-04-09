@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import './Menu.css'
-import logo from '../assets/GremioLogo.jpeg'
+import logo from "../assets/GremioLogo.jpeg";
 
 const MODULOS = [
   {
