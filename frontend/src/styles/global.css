@@ -162,3 +162,21 @@ h1, h2, h3 {
 .badge-entregado   { background: #C8E6C9; color: #2E7D32; }
 .badge-pendiente   { background: #FFF9C4; color: #F57F17; }
 .badge-no-entregado { background: #FFCDD2; color: #B71C1C; }
+
+
+.btn-regresar {
+  display: inline-block;
+  margin-bottom: 16px;
+  background: transparent;
+  border: none;
+  color: var(--color-secundario);
+  font-family: var(--fuente-cuerpo);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+.btn-regresar:hover {
+  color: var(--color-primario);
+}

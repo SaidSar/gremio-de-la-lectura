@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const BADGE = {
   'No entregado': 'badge-no-entregado',
@@ -7,6 +8,7 @@ const BADGE = {
 }
 
 export default function Devoluciones() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({ codigoCliente: '', nombreCliente: '' })
   const [historial, setHistorial] = useState([
     { fecha: '',  titulo: '', estado: '' }
@@ -39,6 +41,7 @@ export default function Devoluciones() {
 
   return (
     <div>
+      <button className="btn-regresar" onClick={() => navigate('/menu')}>← Menú</button>
       <h2 style={{ marginBottom: 20 }}>Libros — Devoluciones</h2>
 
       <div className="card" style={{ maxWidth: 500, marginBottom: 20 }}>

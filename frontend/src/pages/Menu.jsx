@@ -40,7 +40,7 @@ export default function Menu() {
   return (
     <div className="menu-page">
       <div className="menu-header">
-        <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src={logo}/> </div>
+        <div className="login-escudo"  ><img style={{ maxWidth: '240px', width: '100%', height: 'auto' }} src={logo}/> </div>
         <h1>El Gremio de la Lectura</h1>
         <p>Selecciona un módulo para comenzar</p>
       </div>

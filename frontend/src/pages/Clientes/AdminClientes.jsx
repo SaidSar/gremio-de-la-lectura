@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function AdminClientes() {
+  const navigate = useNavigate()
   const [clientes, setClientes] = useState([])
   const [seleccionado, setSeleccionado] = useState(null)
   const [historial, setHistorial] = useState([])
@@ -28,6 +30,7 @@ export default function AdminClientes() {
 
   return (
     <div>
+      <button className="btn-regresar" onClick={() => navigate('/menu')}>← Menú</button>
       <h2 style={{ marginBottom: 20 }}>Clientes — Administración</h2>
 
       <div className="card">

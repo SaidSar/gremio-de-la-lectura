@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Disponibilidad() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({ codigo: '', titulo: '' })
   const [libros, setLibros] = useState([
     { codigo: '', titulo: '', disponibilidad: 0 },
@@ -26,6 +28,7 @@ export default function Disponibilidad() {
 
   return (
     <div>
+      <button className="btn-regresar" onClick={() => navigate('/menu')}>← Menú</button>
       <h2 style={{ marginBottom: 20 }}>Libros — Disponibilidad</h2>
 
       <div className="card" style={{ maxWidth: 500, marginBottom: 20 }}>

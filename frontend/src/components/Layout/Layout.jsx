@@ -99,13 +99,29 @@ export default function Layout({ children }) {
             <div className="modal-seccion">
               <h3>¿Qué puedes hacer aquí?</h3>
               <ul>
-                <li>📖 Registrar préstamos y devoluciones de libros</li>
-                <li>👥 Dar de alta y administrar clientes</li>
-                <li>📦 Consultar el inventario y stock de libros</li>
-                <li>🔍 Ver disponibilidad de ejemplares en tiempo real</li>
+                <li>
+                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                    📖 Registrar préstamos y devoluciones de libros
+                  </a>
+                </li>
+                <li>
+                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                    👥 Dar de alta y administrar clientes
+                  </a>
+                </li>
+                <li>
+                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                    📦 Consultar el inventario y stock de libros
+                  </a>
+                </li>
+                <li>
+                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                    🔍 Ver disponibilidad de ejemplares en tiempo real
+                  </a>
+                </li>
               </ul>
             </div>
-
+            
             <div className="modal-seccion">
               <h3>Desarrollado por</h3>
               <p><strong>Nexus Code™</strong> — Digital Creations</p>

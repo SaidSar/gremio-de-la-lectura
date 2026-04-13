@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function StockLibros() {
+  const navigate = useNavigate()
   const [libros, setLibros] = useState([
-    { codigo: '', titulo: '', disponibilidad: 0,  enTotal: 0 }
+    { codigo: '', titulo: '', disponibilidad: 0, enTotal: 0 }
   ])
 
   useEffect(() => {
@@ -15,6 +17,7 @@ export default function StockLibros() {
 
   return (
     <div>
+      <button className="btn-regresar" onClick={() => navigate('/menu')}>← Menú</button>
       <h2 style={{ marginBottom: 20 }}>Inventario — Stock de libros</h2>
       <div className="card">
         <table className="tabla">

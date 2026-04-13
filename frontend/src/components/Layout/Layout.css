@@ -210,3 +210,15 @@
   min-width: 110px;
   padding: 10px 20px;
 }
+
+.modal-link {
+  color: var(--color-primario);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.6;
+  transition: color 0.2s;
+}
+.modal-link:hover {
+  color: var(--color-acento);
+  text-decoration: underline;
+}

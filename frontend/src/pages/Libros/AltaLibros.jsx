@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const FORM_INICIAL = { titulo: '', autor: '', fecha: '' }
 
 export default function AltaLibros() {
+  const navigate = useNavigate()
   const [form, setForm] = useState(FORM_INICIAL)
   const [mensaje, setMensaje] = useState(null)
 
@@ -34,6 +36,7 @@ export default function AltaLibros() {
 
   return (
     <div>
+      <button className="btn-regresar" onClick={() => navigate('/menu')}>← Menú</button>
       <h2 style={{ marginBottom: 20 }}>Libros — Alta</h2>
       <div className="card" style={{ maxWidth: 500 }}>
         <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
