@@ -5,18 +5,8 @@ export interface Usuario {
   Rol: string
   fecha_creacion: string
 }
-export interface Cliente {
-  Id: number
-  Nombrecompleto: String
-  Telefono: String
-  Correo: String
-  es_deudor: String
-  total_retardos: String
-  fecha_registro: string
 
 
-  Prestamos: Prestamo[]
-}
 
 export interface libro {
   Id: number

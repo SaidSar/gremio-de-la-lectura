@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Login.css'
-import { Loguear } from '../services/Usuario'
+import { Loguear } from '../services/UsuarioDB'
 import logo from "../assets/GremioLogo.jpeg";
 
 export default function Login() {

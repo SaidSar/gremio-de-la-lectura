@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ConsultarCliente, ListarClientes } from '../../services/ClienteDB'
+
 
 export default function AdminClientes() {
   const navigate = useNavigate()
@@ -8,11 +10,18 @@ export default function AdminClientes() {
   const [historial, setHistorial] = useState([])
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    fetch('/api/clientes', { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.json())
-      .then(setClientes)
-      .catch(() => {})
+    const d = async() => {
+      setClientes([])
+      const data = await ListarClientes();
+      if (data != null) {
+        setClientes(data)
+      }
+      else{
+        setClientes([])
+      }
+      console.log(data)
+    }
+    d();
   }, [])
 
   function verHistorial(cliente) {
@@ -37,25 +46,27 @@ export default function AdminClientes() {
         <table className="tabla">
           <thead>
             <tr>
-              <th>Código</th>
               <th>Nombre</th>
               <th>Teléfono</th>
               <th>Correo</th>
-              <th>Dirección</th>
+              <th>direccion</th>
+              <td>es_deudor</td>
+              <td>total_retardos</td>
               <th>Fecha de Registro</th>
             </tr>
           </thead>
           <tbody>
             {clientes.length === 0 ? (
               <tr><td colSpan={6} style={{ textAlign: 'center', color: 'var(--color-texto-suave)' }}>Sin registros</td></tr>
-            ) : clientes.map(c => (
-              <tr key={c.codigo} onClick={() => verHistorial(c)} style={{ cursor: 'pointer' }}>
-                <td>{c.codigo}</td>
-                <td>{c.nombre}</td>
+            ): clientes.map(c => (
+              <tr key={c.Id} onClick={() => verHistorial(c)} style={{ cursor: 'pointer' }}>
+                <td>{c.nombrecompleto }</td>
                 <td>{c.telefono}</td>
                 <td>{c.correo}</td>
-                <td>{c.direccion}</td>
-                <td>{c.fechaRegistro}</td>
+                <th>{c.direccion}</th>
+                <td>{c.es_deudor}</td>
+                <td>{c.total_retardos}</td>
+                <td>{c.fecha_registro}</td>
               </tr>
             ))}
           </tbody>
@@ -64,7 +75,7 @@ export default function AdminClientes() {
 
       {seleccionado && (
         <div className="card" style={{ marginTop: 24 }}>
-          <h3 style={{ marginBottom: 12 }}>Historial de {seleccionado.nombre}</h3>
+          <h3 style={{ marginBottom: 12 }}>Historial de {seleccionado.Nombrecompleto}</h3>
           <table className="tabla">
             <thead>
               <tr>

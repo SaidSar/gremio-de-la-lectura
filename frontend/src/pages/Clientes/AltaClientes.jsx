@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { GuardarCliente } from '../../services/ClienteDB'
 
 const FORM_INICIAL = { nombre: '', telefono: '', correo: '', direccion: '' }
 
@@ -19,20 +20,27 @@ export default function AltaClientes() {
 
   async function guardar(e) {
     e.preventDefault()
+
     try {
-      const token = localStorage.getItem('token')
-      const res = await fetch('/api/clientes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(form),
-      })
-      if (!res.ok) throw new Error()
-      setMensaje({ tipo: 'exito', texto: 'Cliente registrado correctamente.' })
+      const c = {
+        Id: 0,
+        Nombrecompleto: form.nombre,
+        Telefono: form.telefono,
+        Correo: form.correo,
+        Direccion: form.direccion
+      }
+
+      console.log("Enviando:", c)
+
+      const res = await GuardarCliente(c)
+
+      if (!res) throw new Error()
+
+      setMensaje({ tipo: 'exito', texto: res })
       limpiar()
-    } catch {
+
+    } catch (error) {
+      console.error(error)
       setMensaje({ tipo: 'error', texto: 'Error al guardar el cliente.' })
     }
   }
@@ -44,25 +52,57 @@ export default function AltaClientes() {
       <div className="card" style={{ maxWidth: 500 }}>
         <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-          {[
-            { label: 'Nombre:', name: 'nombre', placeholder: '(nombre del cliente)' },
-            { label: 'Número telefónico:', name: 'telefono', placeholder: '(número del cliente)' },
-            { label: 'Correo Electrónico:', name: 'correo', placeholder: '(correo del cliente)', type: 'email' },
-            { label: 'Dirección:', name: 'direccion', placeholder: '(dirección del cliente)' },
-          ].map(f => (
-            <div key={f.name} className="campo">
-              <label>{f.label}</label>
-              <input
-                className="input"
-                name={f.name}
-                type={f.type || 'text'}
-                placeholder={f.placeholder}
-                value={form[f.name]}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          ))}
+          <div key={'nombre'} className="campo">
+            <label>{'Nombre:'}</label>
+            <input
+              className="input"
+              name={'nombre'}
+              type={'text'}
+              placeholder={'nombre del cliente'}
+              value={form['nombre']}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div key={'telefono'} className="campo">
+            <label>{'Número telefónico:'}</label>
+            <input
+              className="input"
+              name={'telefono'}
+              type={'text'}
+              placeholder={'número del cliente'}
+              value={form['telefono']}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div key={'correo'} className="campo">
+            <label>{'Correo Electrónico:'}</label>
+            <input
+              className="input"
+              name={'correo'}
+              type={'email'}
+              placeholder={'correo del cliente'}
+              value={form['correo']}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div key={'direccion'} className="campo">
+            <label>{'Dirección:'}</label>
+            <input
+              className="input"
+              name={'direccion'}
+              type={'text'}
+              placeholder={'dirección del cliente'}
+              value={form['direccion']}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
 
           {mensaje && (
             <p style={{
@@ -78,7 +118,7 @@ export default function AltaClientes() {
 
           <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
             <button type="button" className="btn btn-secundario" onClick={limpiar}>Limpiar</button>
-            <button type="submit" className="btn btn-acento">Guardar</button>
+            <button type="submit" className="btn btn-acento" onClick={guardar}>Guardar</button>
           </div>
         </form>
       </div>
