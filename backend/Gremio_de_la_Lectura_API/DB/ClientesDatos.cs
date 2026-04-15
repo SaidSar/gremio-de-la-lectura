@@ -11,7 +11,7 @@ namespace Gremio_de_la_Lectura_API.DB {
 
             using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                 try {
-                    var query = "SELECT Id, Nombrecompleto, Telefono, Correo, es_deudor, total_retardos, fecha_registro " +
+                    var query = "SELECT Id, Nombrecompleto, Telefono,direccion, Correo, es_deudor, total_retardos, fecha_registro " +
                                 "FROM Clientes WHERE Id = @Id";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -26,6 +26,7 @@ namespace Gremio_de_la_Lectura_API.DB {
                                 Id = Convertir.num(dr, "Id"),
                                 Nombrecompleto = Convertir.str(dr, "Nombrecompleto"),
                                 Telefono = Convertir.str(dr, "Telefono"),
+                                Direccion = Convertir.str(dr, "direccion"),
                                 Correo = Convertir.str(dr, "Correo"),
                                 es_deudor = Convertir.str(dr, "es_deudor"),
                                 total_retardos = Convertir.str(dr, "total_retardos"),
@@ -53,7 +54,7 @@ namespace Gremio_de_la_Lectura_API.DB {
             using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                 try {
                     var query = new StringBuilder();
-                    query.AppendLine("SELECT Id, Nombrecompleto, Telefono, Correo, es_deudor, total_retardos, fecha_registro");
+                    query.AppendLine("SELECT Id, Nombrecompleto, Telefono,direccion, Correo, es_deudor, total_retardos, fecha_registro");
                     query.AppendLine("FROM Clientes");
                     query.AppendLine("ORDER BY Nombrecompleto");
 
@@ -69,6 +70,7 @@ namespace Gremio_de_la_Lectura_API.DB {
                                 Nombrecompleto = Convertir.str(dr, "Nombrecompleto"),
                                 Telefono = Convertir.str(dr, "Telefono"),
                                 Correo = Convertir.str(dr, "Correo"),
+                                Direccion = Convertir.str(dr, "direccion"),
                                 es_deudor = Convertir.str(dr, "es_deudor"),
                                 total_retardos = Convertir.str(dr, "total_retardos"),
                                 fecha_registro = Convertir.date(dr, "fecha_registro").ToString("dd/MM/yyyy")
@@ -91,12 +93,11 @@ namespace Gremio_de_la_Lectura_API.DB {
                 using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                     SqlCommand cmd = new SqlCommand("SP_REGISTRARCLIENTE", oconexion);
 
+                    cmd.Parameters.AddWithValue("Id", c.Id);
                     cmd.Parameters.AddWithValue("Nombrecompleto", c.Nombrecompleto);
                     cmd.Parameters.AddWithValue("Telefono", c.Telefono);
                     cmd.Parameters.AddWithValue("Correo", c.Correo);
-                    cmd.Parameters.AddWithValue("es_deudor", c.es_deudor);
-                    cmd.Parameters.AddWithValue("total_retardos", c.total_retardos);
-
+                    cmd.Parameters.AddWithValue("Direccion", c.Direccion);
                     cmd.Parameters.Add("IdResultado", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                     cmd.CommandType = CommandType.StoredProcedure;

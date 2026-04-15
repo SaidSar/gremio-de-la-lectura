@@ -1,5 +1,7 @@
 
 // ── Usuario del sistema (empleados de la biblioteca) ──────────────────────
+using System.Globalization;
+
 public class Usuario
 {
     public int Id { get; set; }
@@ -16,6 +18,7 @@ public class Cliente
     public string Nombrecompleto { get; set; } = string.Empty;
     public string Telefono { get; set; } = string.Empty;
     public string Correo { get; set; } = string.Empty;
+    public string Direccion { get; set; } = string.Empty;
     public string es_deudor { get; set; } = string.Empty;
     public string total_retardos { get; set; } = string.Empty;
     public string fecha_registro { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
@@ -50,12 +53,25 @@ public class Prestamo
 
     public string FechaPrestamo { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
     public string FechaDevolucion { get; set; }  // null = no devuelto aún
-    public string FechaLimite { get; set; }        
+    public string FechaLimite { get; set; }
 
-    // Estado derivado: "No entregado" | "Entregado" | "Por entregar"
-   // public string Estado =>
-        //FechaDevolucion.HasValue ? "Entregado" :
-        //DateTime.Now > FechaLimite ? "No entregado" : "Por entregar";
+    //Estado derivado: "No entregado" | "Entregado" | "Por entregar"
+    public string Estado {
+        get {
+            if(!string.IsNullOrEmpty(FechaDevolucion))
+                return "Entregado";
+
+            DateTime fechaLimiteConvertida = DateTime.ParseExact(
+                FechaLimite,
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture
+            );
+
+            return DateTime.Now > fechaLimiteConvertida
+                ? "No entregado"
+                : "Por entregar";
+        }
+    }
 }
 
 public class DetallePrestamo{

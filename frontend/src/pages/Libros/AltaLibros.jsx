@@ -21,11 +21,7 @@ export default function AltaLibros() {
     e.preventDefault()
     const token = localStorage.getItem('token')
     try {
-      const res = await fetch('/api/libros', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify(form),
-      })
+      const res = await GuardarLi
       if (!res.ok) throw new Error()
       setMensaje({ tipo: 'exito', texto: 'Libro registrado correctamente.' })
       limpiar()
