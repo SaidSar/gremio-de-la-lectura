@@ -15,49 +15,49 @@ export default function Login() {
   }
 
   const handleSubmit = async (e) => {
-  e.preventDefault()
-  setError('')
+    e.preventDefault()
+    setError('')
 
-  if (form.usuario === 'empleado' && form.contrasena === '123') {
-    localStorage.setItem('token', 'demo-empleado')
-    localStorage.setItem('rol', 'empleado')
-    navigate('/menu')
-    return
-  }
-
-  // Usuario normal → catálogo
-  if (form.usuario === 'jac' && form.contrasena === '123') {
-    localStorage.setItem('token', 'demo-usuario')
-    localStorage.setItem('rol', 'usuario')
-    navigate('/catalogo')
-    return
-  }
-
-  const data = await Loguear(form.usuario, form.contrasena);
-  if (data != null) {
-    console.log(data)
-    if (data.id == 0 || data.id == -1) {
-      setError('Usuario o contraseña incorrectos.')
-    } else {
+    if (form.usuario === 'empleado' && form.contrasena === '123') {
+      localStorage.setItem('token', 'demo-empleado')
+      localStorage.setItem('rol', 'empleado')
       navigate('/menu')
+      return
     }
-    return
-  }
 
-  setError('Usuario o contraseña incorrectos.')
-}
+    // Usuario normal → catálogo
+    if (form.usuario === 'jac' && form.contrasena === '123') {
+      localStorage.setItem('token', 'demo-usuario')
+      localStorage.setItem('rol', 'usuario')
+      navigate('/catalogo')
+      return
+    }
+
+    const data = await Loguear(form.usuario, form.contrasena);
+    if (data != null) {
+      console.log(data)
+      if (data.id == 0 || data.id == -1) {
+        setError('Usuario o contraseña incorrectos.')
+      } else {
+        navigate('/menu')
+      }
+      return
+    }
+
+    setError('Usuario o contraseña incorrectos.')
+  }
 
   return (
     <div className="login-bg">
       <div className="login-card">
         <div className="login-logo">
-          <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src={logo}/> </div>
+          <div className="login-escudo"  ><img style={{ maxWidth: '130px', width: '100%', height: 'auto' }} src={logo} /> </div>
           <h1>El Gremio de la Lectura</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="campo" >
-            <label htmlFor="usuario" className='label' style={{  maxWidth:'30%'}}>Usuario:</label>
+            <label htmlFor="usuario" className='label' style={{ maxWidth: '30%' }}>Usuario:</label>
             <input
               id="usuario"
               name="usuario"
@@ -70,7 +70,7 @@ export default function Login() {
           </div>
 
           <div className="campo">
-            <label htmlFor="contrasena" className='label' style={{  maxWidth:'30%' }}>Contraseña:</label>
+            <label htmlFor="contrasena" className='label' style={{ maxWidth: '30%' }}>Contraseña:</label>
             <input
               id="contrasena"
               name="contrasena"

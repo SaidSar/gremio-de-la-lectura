@@ -9,6 +9,13 @@ export default function AltaClientes() {
   const [form, setForm] = useState(FORM_INICIAL)
   const [mensaje, setMensaje] = useState(null)
 
+  const [Id, setId] = useState(0);
+  const [Nombrecompleto, setNombrecompleto] = useState("");
+  const [Telefono, setTelefono] = useState("");
+  const [Correo, setCorreo] = useState("");
+  const [Direccion, setDireccion] = useState("");
+
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
@@ -23,11 +30,11 @@ export default function AltaClientes() {
 
     try {
       const c = {
-        Id: 0,
-        Nombrecompleto: form.nombre,
-        Telefono: form.telefono,
-        Correo: form.correo,
-        Direccion: form.direccion
+        Id: Id,
+        Nombrecompleto: Nombrecompleto,
+        Telefono: Telefono,
+        Correo: Correo,
+        Direccion: Direccionc
       }
 
       console.log("Enviando:", c)
@@ -59,8 +66,8 @@ export default function AltaClientes() {
               name={'nombre'}
               type={'text'}
               placeholder={'nombre del cliente'}
-              value={form['nombre']}
-              onChange={handleChange}
+              value={Nombrecompleto}
+              onChange={(e)=>setNombrecompleto(e.value)}
               required
             />
           </div>
@@ -72,8 +79,8 @@ export default function AltaClientes() {
               name={'telefono'}
               type={'text'}
               placeholder={'número del cliente'}
-              value={form['telefono']}
-              onChange={handleChange}
+              value={Telefono}
+              onChange={(e)=>setTelefono(e.value)}
               required
             />
           </div>
@@ -85,8 +92,8 @@ export default function AltaClientes() {
               name={'correo'}
               type={'email'}
               placeholder={'correo del cliente'}
-              value={form['correo']}
-              onChange={handleChange}
+              value={Correo}
+              onChange={(e)=>setCorreo(e.value)}
               required
             />
           </div>
@@ -97,8 +104,8 @@ export default function AltaClientes() {
               name={'direccion'}
               type={'text'}
               placeholder={'dirección del cliente'}
-              value={form['direccion']}
-              onChange={handleChange}
+              value={Direccion}
+              onChange={(e)=>setDireccion(e.value)}
               required
             />
           </div>

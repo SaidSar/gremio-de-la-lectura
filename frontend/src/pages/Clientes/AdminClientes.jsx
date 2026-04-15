@@ -10,13 +10,13 @@ export default function AdminClientes() {
   const [historial, setHistorial] = useState([])
 
   useEffect(() => {
-    const d = async() => {
+    const d = async () => {
       setClientes([])
       const data = await ListarClientes();
       if (data != null) {
         setClientes(data)
       }
-      else{
+      else {
         setClientes([])
       }
       console.log(data)
@@ -49,22 +49,22 @@ export default function AdminClientes() {
               <th>Nombre</th>
               <th>Teléfono</th>
               <th>Correo</th>
-              <th>direccion</th>
-              <td>es_deudor</td>
-              <td>total_retardos</td>
+              <th>Dirección</th>
+              <th>Deudor</th>
+              <th>Total Retardos</th>
               <th>Fecha de Registro</th>
             </tr>
           </thead>
           <tbody>
             {clientes.length === 0 ? (
               <tr><td colSpan={6} style={{ textAlign: 'center', color: 'var(--color-texto-suave)' }}>Sin registros</td></tr>
-            ): clientes.map(c => (
+            ) : clientes.map(c => (
               <tr key={c.Id} onClick={() => verHistorial(c)} style={{ cursor: 'pointer' }}>
-                <td>{c.nombrecompleto }</td>
+                <td>{c.nombrecompleto}</td>
                 <td>{c.telefono}</td>
                 <td>{c.correo}</td>
-                <th>{c.direccion}</th>
-                <td>{c.es_deudor}</td>
+                <td>{c.direccion}</td>
+                <td>{c.es_deudor == "True" ? "Deudor" : "Responsable"}</td>
                 <td>{c.total_retardos}</td>
                 <td>{c.fecha_registro}</td>
               </tr>
