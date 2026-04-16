@@ -1,21 +1,18 @@
 import api from "./api";
 import { libro } from "./Libro";
 
-
 export const ListarLibros = async() => {
     try{
-        const {data} = await api.get<libro[]>("ClientesCT/Listar")
+        const {data} = await api.get<libro[]>("LibrosCT/Listar")
         return data;
     }catch{
         return null;
     }
 }
-
-
 export const GuardarLibro = async(l:libro) => {
     try{
         const {data} = await api.post<string>(
-            "ClientesCT/Guardar", l
+            "LibrosCT/Guardar", l
         );
         return data;
     }catch{
@@ -23,9 +20,9 @@ export const GuardarLibro = async(l:libro) => {
     }
 
 }
-export const ConsultarCliente = async(id:number) => {
+export const ConsultarLibro = async(id:number) => {
     try{
-        const {data} = await api.get<libro>(`ClientesCT/Consultar?id=${id}`)
+        const {data} = await api.get<libro>(`LibrosCT/Consultar?id=${id}`)
         return data;
     }catch{
         return null;

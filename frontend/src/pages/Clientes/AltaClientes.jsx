@@ -34,7 +34,7 @@ export default function AltaClientes() {
         Nombrecompleto: Nombrecompleto,
         Telefono: Telefono,
         Correo: Correo,
-        Direccion: Direccionc
+        Direccion: Direccion
       }
 
       console.log("Enviando:", c)
@@ -42,13 +42,13 @@ export default function AltaClientes() {
       const res = await GuardarCliente(c)
 
       if (!res) throw new Error()
-
+      if (res[0] == 'E') throw new Error()  
       setMensaje({ tipo: 'exito', texto: res })
       limpiar()
 
     } catch (error) {
       console.error(error)
-      setMensaje({ tipo: 'error', texto: 'Error al guardar el cliente.' })
+      setMensaje({ tipo: 'error', texto: res })
     }
   }
 
