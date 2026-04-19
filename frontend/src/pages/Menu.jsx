@@ -19,7 +19,6 @@ const MODULOS = [
       { label: 'Préstamos',      path: '/libros/prestamos' },
       { label: 'Devoluciones',   path: '/libros/devoluciones' },
       { label: 'Disponibilidad', path: '/libros/disponibilidad' },
-      { label: 'Alta de libros', path: '/libros/alta' },
     ],
   },
 

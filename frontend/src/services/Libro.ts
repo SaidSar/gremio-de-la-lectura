@@ -6,4 +6,6 @@ export interface libro {
   año: number
   categoria: String
   isbn: String
+  cantidad_disponible: number
+  cantidad_total: number
 }
