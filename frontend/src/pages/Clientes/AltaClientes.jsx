@@ -21,8 +21,11 @@ export default function AltaClientes() {
   }
 
   function limpiar() {
-    setForm(FORM_INICIAL)
-    setMensaje(null)
+    setId(0);
+    setNombrecompleto("");
+    setTelefono("");
+    setCorreo("");
+    setDireccion("");
   }
 
   async function guardar(e) {
@@ -42,7 +45,7 @@ export default function AltaClientes() {
       const res = await GuardarCliente(c)
 
       if (!res) throw new Error()
-      if (res[0] == 'E') throw new Error()  
+      if (res[0] == 'E') throw new Error()
       setMensaje({ tipo: 'exito', texto: res })
       limpiar()
 
@@ -67,7 +70,7 @@ export default function AltaClientes() {
               type={'text'}
               placeholder={'nombre del cliente'}
               value={Nombrecompleto}
-              onChange={(e)=>setNombrecompleto(e.value)}
+              onChange={(e) => setNombrecompleto(e.value)}
               required
             />
           </div>
@@ -80,7 +83,7 @@ export default function AltaClientes() {
               type={'text'}
               placeholder={'número del cliente'}
               value={Telefono}
-              onChange={(e)=>setTelefono(e.value)}
+              onChange={(e) => setTelefono(e.value)}
               required
             />
           </div>
@@ -93,7 +96,7 @@ export default function AltaClientes() {
               type={'email'}
               placeholder={'correo del cliente'}
               value={Correo}
-              onChange={(e)=>setCorreo(e.value)}
+              onChange={(e) => setCorreo(e.value)}
               required
             />
           </div>
@@ -105,7 +108,7 @@ export default function AltaClientes() {
               type={'text'}
               placeholder={'dirección del cliente'}
               value={Direccion}
-              onChange={(e)=>setDireccion(e.value)}
+              onChange={(e) => setDireccion(e.value)}
               required
             />
           </div>

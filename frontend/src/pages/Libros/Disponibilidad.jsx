@@ -1,21 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ListarLibros } from '../../services/LibroDB'
 
 export default function Disponibilidad() {
   const navigate = useNavigate()
   const [form, setForm] = useState({ codigo: '', titulo: '' })
-  const [libros, setLibros] = useState([
-    { codigo: '', titulo: '', disponibilidad: 0 },
-  ])
-
+  const [libros, setLibros] = useState([])
+  const [Titulo, setTitulo] = useState("")
+ const [Codigo, setCodigo] = useState("")
   async function buscar(e) {
     e.preventDefault()
     const token = localStorage.getItem('token')
     try {
       const params = new URLSearchParams(form).toString()
-      const res = await fetch(`/api/libros/disponibilidad?${params}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const res = await ListarLibros()
       const data = await res.json()
       setLibros(Array.isArray(data) ? data : [])
     } catch {}
@@ -36,12 +34,12 @@ export default function Disponibilidad() {
           <div className="campo">
             <label>Código:</label>
             <input className="input" placeholder="(clave única de libro)"
-              value={form.codigo} onChange={e => setForm({ ...form, codigo: e.target.value })} />
+              value={Codigo} onChange={e => setCodigo(e.value)} />
           </div>
           <div className="campo">
             <label>Título:</label>
             <input className="input" placeholder="(nombre del libro)"
-              value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })} />
+              value={Titulo} onChange={e => setTitulo(e.value)} />
           </div>
           <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
             <button type="button" className="btn btn-secundario" onClick={limpiar}>Limpiar</button>

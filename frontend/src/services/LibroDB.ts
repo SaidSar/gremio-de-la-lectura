@@ -1,9 +1,8 @@
 import api from "./api";
 import { libro } from "./Libro";
 
-export const ListarLibros = async() => {
-    try{
-        const {data} = await api.get<libro[]>("LibrosCT/Listar")
+export const ListarLibros = async(s:string) => {
+    try{        const {data} = await api.get<libro[]>(`LibrosCT/Listar?busqueda=${s}`)
         return data;
     }catch{
         return null;

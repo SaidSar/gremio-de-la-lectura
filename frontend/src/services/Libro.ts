@@ -1,7 +1,7 @@
 export interface libro {
-  Id: number
-  Titulo: String
-  Autor: String
+  id: number
+  titulo: String
+  autor: String
   editorial: String
   año: number
   categoria: String

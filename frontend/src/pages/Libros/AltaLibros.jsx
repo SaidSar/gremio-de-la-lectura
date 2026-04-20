@@ -2,50 +2,52 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GuardarLibro } from '../../services/LibroDB'
 
-const FORM_INICIAL = { titulo: '', autor: '', fecha: '', autor: '' }
 
 export default function AltaLibros() {
   const navigate = useNavigate()
-  const [form, setForm] = useState(FORM_INICIAL)
   const [mensaje, setMensaje] = useState(null)
 
   const [Id, setId] = useState(0)
   const [Titulo, setTitulo] = useState("")
   const [Autor, setAutor] = useState("")
   const [Editorial, setEditorial] = useState("")
-  const [Año, setAño] = useState("")
+  const [Año, setAño] = useState(0)
   const [Categoria, setCategoria] = useState("")
   const [Isbn, setIsbn] = useState("")
   const [Cantidad_total, setCantidad_total] = useState(0)
   const [Cantidad_disponible, setCantidad_disponible] = useState(0)
 
-  function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+
 
   function limpiar() {
-    setForm(FORM_INICIAL)
-    setMensaje(null)
+    setId(0)
+    setTitulo("")
+    setAutor("")
+    setEditorial("")
+    setAño(0)
+    setCategoria("")
+    setIsbn("")
+    setCantidad_total(0)
+    setCantidad_disponible(0)
   }
 
   async function guardar(e) {
     e.preventDefault()
     try {
       const l = {
-        Id: Id,
-        Titulo: Titulo,
-        Autor: Autor,
-        Editorial: Editorial,
-        Año: Año.substring(0, 4),
-        Categoria: Categoria,
-        Isbn: Isbn,
+        id: Id,
+        titulo: Titulo,
+        autor: Autor,
+        editorial: Editorial,
+        año: Año,
+        categoria: Categoria,
+        isbn: Isbn,
         cantidad_total: Cantidad_total,
-        cantidad_disponible : Cantidad_total
+        cantidad_disponible: Cantidad_total
       }
-      console.log("Enviando:", l)
       const res = await GuardarLibro(l)
       if (!res) throw new Error()
-      setMensaje({ tipo: 'exito', texto: res })
+      setMensaje({ tipo: 'exito', texto: 'Libro Guardado ' })
       limpiar()
     } catch (error) {
       console.error(error)
@@ -64,49 +66,54 @@ export default function AltaLibros() {
             <label>{'Título:'}</label>
             <input className="input" name={'titulo'} type={'text'}
               placeholder={'Título del libro'} value={Titulo}
-              onChange={(e) => { setTitulo(e.value) }} required />
+              onChange={(e) => { setTitulo(e.target.value) }} required />
           </div>
+
 
           <div key={'autor'} className="campo">
             <label>{'Autor:'}</label>
             <input className="input" name={'autor'} type={'text'}
               placeholder={'Autor del libro'} value={Autor}
-              onChange={(e) => { setAutor(e.value) }} required />
+              onChange={(e) => { setAutor(e.target.value) }} required />
           </div>
 
+
           <div key={'fecha'} className="campo">
-            <label>{'Fecha:'}</label>
-            <input className="input" name={'fecha'} type={'date'}
+            <label>{'Fecha de salida del libro:'}</label>
+            <input className="input" name={'fecha'} type={'number'}
+            min="0" max = "2080"
               placeholder={'Año del libro'} value={Año}
-              onChange={(e) => { setAño(e.value) }} required />
+              onChange={(e) => { setAño(Number(e.target.value)) }} required />
           </div>
 
           <div key={'editorial'} className="campo">
             <label>{'Editorial:'}</label>
             <input className="input" name={'editorial'} type={'text'}
               placeholder={'Editorial del libro'} value={Editorial}
-              onChange={(e) => { setEditorial(e.value) }} required />
+              onChange={(e) => { setEditorial(e.target.value) }} required />
           </div>
 
           <div key={'categoria'} className="campo">
             <label>{'Categoria:'}</label>
             <input className="input" name={'categoria'} type={'text'}
               placeholder={'Categoria del libro'} value={Categoria}
-              onChange={(e) => { setCategoria(e.value) }} required />
+              onChange={(e) => { setCategoria(e.target.value) }} required />
           </div>
 
           <div key={'isbn'} className="campo">
             <label>{'Isbn:'}</label>
             <input className="input" name={'isbn'} type={'text'}
               placeholder={'Isbn del libro'} value={Isbn}
-              onChange={(e) => { setIsbn(e.value) }} required />
+              onChange={(e) => { setIsbn(e.target.value) }} required />
           </div>
 
-          <div>
+          <div className="campo">
+            <label>{'Cantidad Total:'}</label>
             <input
               type="number"
+              className="input"
               value={Cantidad_total}
-              onChange={(e) => {setCantidad_total(e.value)}}
+              onChange={(e) => { setCantidad_total(Number(e.target.value)) }}
               min="0"
               step="1"
             />
