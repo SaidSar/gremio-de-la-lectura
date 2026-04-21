@@ -100,28 +100,39 @@ export default function Layout({ children }) {
               <h3>¿Qué puedes hacer aquí?</h3>
               <ul>
                 <li>
-                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                  <a href="/Guia rapida gestion proyectos.pdf" target="_blank" rel="noreferrer" className="modal-link">
                     📖 Registrar préstamos y devoluciones de libros
                   </a>
                 </li>
                 <li>
-                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                  <a href="/Guia rapida gestion proyectos.pdf" target="_blank" rel="noreferrer" className="modal-link">
                     👥 Dar de alta y administrar clientes
                   </a>
                 </li>
                 <li>
-                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                  <a href="/Guia rapida gestion proyectos.pdf" target="_blank" rel="noreferrer" className="modal-link">
                     📦 Consultar el inventario y stock de libros
                   </a>
                 </li>
                 <li>
-                  <a href="/manual.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                  <a href="/Guia rapida gestion proyectos.pdf" target="_blank" rel="noreferrer" className="modal-link">
                     🔍 Ver disponibilidad de ejemplares en tiempo real
                   </a>
                 </li>
               </ul>
             </div>
-            
+             
+             <div className="modal-seccion">
+              <h3>Manual de Usuario</h3>
+              <ul>
+                 <li>
+                  <a href="/Manual de Usuario EGDL.pdf" target="_blank" rel="noreferrer" className="modal-link">
+                    Por cualquier duda consulta nuestro Manual de Usuario completo.
+                  </a>
+                </li>
+              </ul>
+            </div>
+
             <div className="modal-seccion">
               <h3>Desarrollado por</h3>
               <p><strong>Nexus Code™</strong> — Digital Creations</p>
