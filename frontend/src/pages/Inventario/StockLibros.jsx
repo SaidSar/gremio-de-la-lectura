@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ListarLibros } from '../../services/LibroDB'
 
 export default function StockLibros() {
   const navigate = useNavigate()
-  const [libros, setLibros] = useState([
-    { codigo: '', titulo: '', disponibilidad: 0, enTotal: 0 }
-  ])
+  const [libros, setLibros] = useState([])
 
+  const buscar = async () => {
+    try {
+      const data = await ListarLibros("")
+      if (data != null) {
+        setLibros(data)
+      }
+    } catch {
+    }
+    console.log("libros ", libros)
+  }
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    fetch('/api/inventario/stock', { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.json())
-      .then(data => { if (Array.isArray(data)) setLibros(data) })
-      .catch(() => {})
+    buscar()
   }, [])
 
   return (
@@ -33,11 +38,11 @@ export default function StockLibros() {
             {libros.length === 0 ? (
               <tr><td colSpan={4} style={{ textAlign: 'center', color: 'var(--color-texto-suave)' }}>Sin registros</td></tr>
             ) : libros.map(l => (
-              <tr key={l.codigo}>
-                <td>{l.codigo}</td>
+              <tr key={l.id}>
+                <td>{l.id}</td>
                 <td>{l.titulo}</td>
-                <td>{l.disponibilidad}</td>
-                <td>{l.enTotal}</td>
+                <td>{l.cantidad_disponible}</td>
+                <td>{l.cantidad_total}</td>
               </tr>
             ))}
           </tbody>
