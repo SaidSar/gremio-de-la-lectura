@@ -147,3 +147,34 @@
   text-align: center;
   color: var(--color-texto-suave);
 }
+
+/* ── Pestañas ── */
+.catalogo-pestanas {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid var(--color-borde);
+  padding-bottom: 0;
+}
+
+.pestana-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 10px 18px;
+  font-family: var(--fuente-cuerpo);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -2px;
+}
+
+.pestana-btn:hover {
+  color: var(--color-primario);
+}
+
+.pestana-btn.activa {
+  color: var(--color-primario);
+  border-bottom: 3px solid var(--color-primario);
+}

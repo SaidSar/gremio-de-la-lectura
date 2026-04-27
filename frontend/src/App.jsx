@@ -18,6 +18,7 @@ import StockLibros from './pages/Inventario/StockLibros.jsx'
 
 // Otras páginas (si las hubiera) se importarían aquí
 import Catalogo from './pages/Catalogo.jsx'
+import MisPrestamos from './pages/MisPrestamos.jsx'
 
 // Guard simple: si no hay token, redirige al login
 function RutaProtegida({ children }) {
@@ -54,7 +55,9 @@ export default function App() {
       <Route path="/inventario/stock" element={
         <RutaProtegida><Layout><StockLibros /></Layout></RutaProtegida>
       } />
-      
+      <Route path="/mis-prestamos" element={
+        <RutaProtegida><MisPrestamos /></RutaProtegida>
+      } />
       <Route path="/catalogo" element={
         <RutaProtegida><Layout><Catalogo /></Layout></RutaProtegida>
       }/>
