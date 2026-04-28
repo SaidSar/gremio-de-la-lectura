@@ -32,13 +32,13 @@ public class Libro
     public int Id { get; set; }
     public string Titulo { get; set; } = string.Empty;
     public string Autor { get; set; } = string.Empty;
-    public string editorial { get; set; }
-    public int año { get; set; }       
-    public string categoria { get; set; }      
-    public string isbn { get; set; }
+    public string Editorial { get; set; }
+    public int Año { get; set; }       
+    public string Categoria { get; set; }      
+    public string Isbn { get; set; }
 
-    public int cantidad_disponible { get; set; }
-    public int cantidad_total { get; set; }
+    public int Cantidad_disponible { get; set; }
+    public int Cantidad_total { get; set; }
 
 }
 

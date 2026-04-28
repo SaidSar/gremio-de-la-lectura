@@ -7,29 +7,26 @@ namespace Gremio_de_la_Lectura_API.DB {
     public class LibrosDatos {
         public static Libro Consultar(int Id) {
             Libro c;
-
             using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                 try {
-                    var query = "SELECT Id, Titulo,editorial, año, categoria, isbn, cantidad_disponible, cantidad_total" +
+                    var query = "SELECT Id, Titulo,editorial , autor, año, categoria, isbn, cantidad_disponible, cantidad_total" +
                                 "FROM Libros WHERE Id = @Id";
-
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@Id", Id);
                     cmd.CommandType = CommandType.Text;
-
                     oconexion.Open();
-
                     using(SqlDataReader dr = cmd.ExecuteReader()) {
                         if(dr.Read()) {
                             c = new Libro() {
                                 Id = Convertir.num(dr, "Id"),
+                                Autor = Convertir.str(dr, "autor"),
                                 Titulo = Convertir.str(dr, "Titulo"),
-                                editorial = Convertir.str(dr, "editorial"),
-                                año = Convertir.num(dr, "año"),
-                                categoria = Convertir.str(dr, "categoria"),
-                                isbn = Convertir.str(dr, "isbn"),
-                                cantidad_total = Convertir.num(dr, "cantidad_total"),
-                                cantidad_disponible = Convertir.num(dr, "cantidad_disponible"),
+                                Editorial = Convertir.str(dr, "editorial"),
+                                Año = Convertir.num(dr, "año"),
+                                Categoria = Convertir.str(dr, "categoria"),
+                                Isbn = Convertir.str(dr, "isbn"),
+                                Cantidad_total = Convertir.num(dr, "cantidad_total"),
+                                Cantidad_disponible = Convertir.num(dr, "cantidad_disponible"),
                             };
                         }
                         else {
@@ -43,21 +40,34 @@ namespace Gremio_de_la_Lectura_API.DB {
                     c.Id = -1;
                 }
             }
-
             return c;
         }
 
-        public static List<Libro> Listar() {
+        public static List<Libro> Listar(string s, string tipo) {
             var lista = new List<Libro>();
 
             using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                 try {
                     var query = new StringBuilder();
-                    query.AppendLine("SELECT Id, Titulo,editorial, año, categoria, isbn,cantidad_total, cantidad_disponible");
+                    query.AppendLine("SELECT Id, Titulo,autor ,editorial, año, categoria, isbn,cantidad_total, cantidad_disponible");
                     query.AppendLine("FROM Libros");
+                    if(!string.IsNullOrEmpty(s)) {
+                        if(tipo == "T") {
+                            query.AppendLine("WHERE Titulo LIKE '%' + @s + '%'");
+                        }
+                        else{
+                            query.AppendLine("WHERE Id LIKE '%' + @s + '%'");
+                        }
+
+                    }
                     query.AppendLine("ORDER BY Titulo");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    if(s != null) {
+                        if(s != "") {
+                            cmd.Parameters.AddWithValue("@s", s);
+                        }
+                    }
                     cmd.CommandType = CommandType.Text;
 
                     oconexion.Open();
@@ -66,13 +76,14 @@ namespace Gremio_de_la_Lectura_API.DB {
                         while(dr.Read()) {
                             lista.Add(new Libro() {
                                 Id = Convertir.num(dr, "Id"),
+                                Autor = Convertir.str(dr, "autor"),
                                 Titulo = Convertir.str(dr, "Titulo"),
-                                editorial = Convertir.str(dr, "editorial"),
-                                año = Convertir.num(dr, "año"),
-                                categoria = Convertir.str(dr, "categoria"),
-                                isbn = Convertir.str(dr, "isbn"),
-                                cantidad_total = Convertir.num(dr, "cantidad_total"),
-                                cantidad_disponible = Convertir.num(dr, "cantidad_disponible"),
+                                Editorial = Convertir.str(dr, "editorial"),
+                                Año = Convertir.num(dr, "año"),
+                                Categoria = Convertir.str(dr, "categoria"),
+                                Isbn = Convertir.str(dr, "isbn"),
+                                Cantidad_total = Convertir.num(dr, "cantidad_total"),
+                                Cantidad_disponible = Convertir.num(dr, "cantidad_disponible"),
                             });
                         }
                     }
@@ -94,12 +105,12 @@ namespace Gremio_de_la_Lectura_API.DB {
 
                     cmd.Parameters.AddWithValue("id", c.Id);
                     cmd.Parameters.AddWithValue("titulo", c.Titulo);
-                    cmd.Parameters.AddWithValue("editorial", c.editorial);
-                    cmd.Parameters.AddWithValue("año", c.año);
-                    cmd.Parameters.AddWithValue("categoria", c.categoria);
+                    cmd.Parameters.AddWithValue("editorial", c.Editorial);
+                    cmd.Parameters.AddWithValue("año", c.Año);
+                    cmd.Parameters.AddWithValue("categoria", c.Categoria);
                     cmd.Parameters.AddWithValue("autor", c.Autor);
-                    cmd.Parameters.AddWithValue("isbn", c.isbn);
-                    cmd.Parameters.AddWithValue("cantidad_total", c.cantidad_total);
+                    cmd.Parameters.AddWithValue("isbn", c.Isbn);
+                    cmd.Parameters.AddWithValue("cantidad_total", c.Cantidad_total);
 
                     cmd.Parameters.Add("IdResultado", SqlDbType.Int).Direction = ParameterDirection.Output;
 
@@ -118,5 +129,6 @@ namespace Gremio_de_la_Lectura_API.DB {
 
             return resultado;
         }
+
     }
 }
