@@ -1,0 +1,12 @@
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-nombre {
+  color: #e8d5b0;
+  font-family: var(--fuente-titulo);
+  font-size: 16px;
+  font-weight: 600;
+}

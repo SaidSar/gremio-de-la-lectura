@@ -3,6 +3,7 @@ import Login from './pages/Login.jsx'
 import Menu from './pages/Menu.jsx'
 import Layout from './components/Layout/Layout.jsx'
 
+
 // Clientes
 import AltaClientes from './pages/Clientes/AltaClientes.jsx'
 import AdminClientes from './pages/Clientes/AdminClientes.jsx'
@@ -19,10 +20,15 @@ import StockLibros from './pages/Inventario/StockLibros.jsx'
 // Otras páginas (si las hubiera) se importarían aquí
 import Catalogo from './pages/Catalogo.jsx'
 import MisPrestamos from './pages/MisPrestamos.jsx'
-
+import LayoutWeb from './components/Layout/LayoutWeb.jsx'
 // Guard simple: si no hay token, redirige al login
 function RutaProtegida({ children }) {
   return children;
+}
+function RutaWeb({ children }) {
+  const token = localStorage.getItem('token')
+  const rol = localStorage.getItem('rol')
+  return (token && rol === 'web') ? children : <Navigate to="/" replace />
 }
 
 export default function App() {
@@ -55,13 +61,13 @@ export default function App() {
       <Route path="/inventario/stock" element={
         <RutaProtegida><Layout><StockLibros /></Layout></RutaProtegida>
       } />
-      <Route path="/mis-prestamos" element={
-        <RutaProtegida><MisPrestamos /></RutaProtegida>
-      } />
       <Route path="/catalogo" element={
-        <RutaProtegida><Layout><Catalogo /></Layout></RutaProtegida>
-      }/>
+        <RutaWeb><LayoutWeb><Catalogo /></LayoutWeb></RutaWeb>
+      } />
 
+      <Route path="/mis-prestamos" element={
+        <RutaWeb><LayoutWeb><MisPrestamos /></LayoutWeb></RutaWeb>
+      } />
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
