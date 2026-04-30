@@ -15,6 +15,7 @@ public class Usuario
 public class Cliente
 {
     public int Id { get; set; }
+    public string codigo { get; set; } = string.Empty;
     public string Nombrecompleto { get; set; } = string.Empty;
     public string Telefono { get; set; } = string.Empty;
     public string Correo { get; set; } = string.Empty;
@@ -25,7 +26,6 @@ public class Cliente
 
     public ICollection<Prestamo> Prestamos { get; set; } = new List<Prestamo>();
 }
-
 // ── Libro ─────────────────────────────────────────────────────────────────
 public class Libro
 {

@@ -1,6 +1,4 @@
-﻿using Gremio_de_la_Lectura_API.DB;
-using Gremio_de_la_Lectura_API.Querys_base_datos;
-using Microsoft.AspNetCore.Http;
+﻿using Gremio_de_la_Lectura_API.Querys_base_datos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gremio_de_la_Lectura_API.Controllers {
@@ -11,26 +9,25 @@ namespace Gremio_de_la_Lectura_API.Controllers {
         [HttpGet]
         [Route("Consultar")]
         public Prestamo Consultar(int Id) {
-            Prestamo p = PrestamosDatos.Consultar(Id);
-            return p;
+            return PrestamosDatos.Consultar(Id);
         }
 
         [HttpGet]
-        [Route("Listar")]
-        public List<Prestamo> Listar(string? busqueda) {
-            if(string.IsNullOrEmpty(busqueda)) {
-                busqueda = "";
-            }
-            return PrestamosDatos.Listar(busqueda);
+        [Route("ListarPorCliente")]
+        public List<Prestamo> ListarPorCliente(int idCliente) {
+            return PrestamosDatos.ListarPorCliente(idCliente);
         }
 
         [HttpPost]
-        [Route("Guardar")]
-        public string Guardar(Prestamo l) {
-            string id = PrestamosDatos.Registrar(l);
-            return id;
+        [Route("Registrar")]
+        public string Registrar(int idCliente, int idUsuario, int idLibro) {
+            return PrestamosDatos.Registrar(idCliente, idUsuario, idLibro);
         }
 
-    
+        [HttpPost]
+        [Route("Devolver")]
+        public string Devolver(int idPrestamo) {
+            return PrestamosDatos.Devolver(idPrestamo);
+        }
     }
 }

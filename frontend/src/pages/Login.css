@@ -70,3 +70,32 @@
   color: var(--color-texto-suave);
   text-align: center;
 }
+
+.login-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--color-borde);
+}
+
+.login-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 10px;
+  font-family: var(--fuente-cuerpo);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.login-tab:hover { color: var(--color-primario); }
+
+.login-tab.activo {
+  color: var(--color-primario);
+  border-bottom: 3px solid var(--color-primario);
+}

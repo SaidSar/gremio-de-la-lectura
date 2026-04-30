@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gremio_de_la_Lectura_API.Controllers {
-    [Route("[controller]")]
+    [Route("ClientesCT")]
     [ApiController]
-    public class ClientesCT : ControllerBase {
+    public class ClientesController : ControllerBase {
 
         [HttpGet]
         [Route("Consultar")]
@@ -27,5 +27,11 @@ namespace Gremio_de_la_Lectura_API.Controllers {
             string id = ClientesDatos.Registrar(u);
             return id;
         }
+        [HttpGet]
+        [Route("ConsultarPorCodigo")]
+        public Cliente ConsultarPorCodigo(string codigo) {
+            return ClientesDatos.ConsultarPorCodigo(codigo);
+        }
+
     }
 }

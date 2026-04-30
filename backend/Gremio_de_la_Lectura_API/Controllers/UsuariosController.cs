@@ -22,8 +22,7 @@ namespace Gremio_de_la_Lectura_API.Controllers {
                 return (new Usuario { Id = 0, usuario = "Error: Usuario o Contraseña incorrecta " });
             }
             if(u.Id == -1) {
-                return (new Usuario { Id = -1, usuario = "Error: Servidor no funcionando " });
-                
+                return (new Usuario { Id = -1, usuario = u.usuario });
             }
             return u;
 
@@ -51,6 +50,12 @@ namespace Gremio_de_la_Lectura_API.Controllers {
             string id = UsuariosDatos.Registrar(u);
             return id;
         }
+        [HttpPost]
+        [Route("RegistrarWeb")]
+        public string RegistrarWeb(string usuario, string contrasena) {
+            return UsuariosDatos.RegistrarWeb(usuario, contrasena);
+        }
+
 
     }
 }

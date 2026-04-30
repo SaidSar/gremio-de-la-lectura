@@ -11,8 +11,7 @@ namespace Gremio_de_la_Lectura_API.DB {
 
             using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                 try {
-                    var query = "SELECT Id, Nombrecompleto, Telefono,direccion, Correo, es_deudor, total_retardos, fecha_registro " +
-                                "FROM Clientes WHERE Id = @Id";
+                    var query = "SELECT Id, codigo, Nombrecompleto, Telefono, direccion, Correo, es_deudor, total_retardos, fecha_registro " + "FROM Clientes WHERE Id = @Id";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@Id", Id);
@@ -24,6 +23,7 @@ namespace Gremio_de_la_Lectura_API.DB {
                         if(dr.Read()) {
                             c = new Cliente() {
                                 Id = Convertir.num(dr, "Id"),
+                                codigo = Convertir.str(dr, "codigo"),
                                 Nombrecompleto = Convertir.str(dr, "Nombrecompleto"),
                                 Telefono = Convertir.str(dr, "Telefono"),
                                 Direccion = Convertir.str(dr, "direccion"),
@@ -54,7 +54,7 @@ namespace Gremio_de_la_Lectura_API.DB {
             using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                 try {
                     var query = new StringBuilder();
-                    query.AppendLine("SELECT Id, Nombrecompleto, Telefono,direccion, Correo, es_deudor, total_retardos, fecha_registro");
+                    query.AppendLine("SELECT Id, codigo, Nombrecompleto, Telefono, direccion, Correo, es_deudor, total_retardos, fecha_registro");
                     query.AppendLine("FROM Clientes");
                     query.AppendLine("ORDER BY Nombrecompleto");
 
@@ -67,6 +67,7 @@ namespace Gremio_de_la_Lectura_API.DB {
                         while(dr.Read()) {
                             lista.Add(new Cliente() {
                                 Id = Convertir.num(dr, "Id"),
+                                codigo = Convertir.str(dr, "codigo"),
                                 Nombrecompleto = Convertir.str(dr, "Nombrecompleto"),
                                 Telefono = Convertir.str(dr, "Telefono"),
                                 Correo = Convertir.str(dr, "Correo"),
@@ -114,6 +115,41 @@ namespace Gremio_de_la_Lectura_API.DB {
             }
 
             return resultado;
+        }
+        public static Cliente ConsultarPorCodigo(string codigo) {
+            Cliente c;
+            using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
+                try {
+                    var query = "SELECT Id, codigo, Nombrecompleto, Telefono, direccion, Correo, es_deudor, total_retardos, fecha_registro " +
+                                "FROM Clientes WHERE codigo = @codigo";
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
+                    cmd.Parameters.AddWithValue("@codigo", codigo);
+                    cmd.CommandType = CommandType.Text;
+                    oconexion.Open();
+                    using(SqlDataReader dr = cmd.ExecuteReader()) {
+                        if(dr.Read()) {
+                            c = new Cliente() {
+                                Id = Convertir.num(dr, "Id"),
+                                codigo = Convertir.str(dr, "codigo"),
+                                Nombrecompleto = Convertir.str(dr, "Nombrecompleto"),
+                                Telefono = Convertir.str(dr, "Telefono"),
+                                Direccion = Convertir.str(dr, "direccion"),
+                                Correo = Convertir.str(dr, "Correo"),
+                                es_deudor = Convertir.str(dr, "es_deudor"),
+                                total_retardos = Convertir.str(dr, "total_retardos"),
+                                fecha_registro = Convertir.date(dr, "fecha_registro").ToString("dd/MM/yyyy")
+                            };
+                        } else {
+                            c = new Cliente();
+                            c.Id = 0;
+                        }
+                    }
+                } catch(Exception) {
+                    c = new Cliente();
+                    c.Id = -1;
+                }
+            }
+            return c;
         }
     }
 }

@@ -79,10 +79,10 @@ export default function AltaLibros() {
 
 
           <div key={'fecha'} className="campo">
-            <label>{'Fecha de salida del libro:'}</label>
+            <label>{'Año de publicación:'}</label>
             <input className="input" name={'fecha'} type={'number'}
             min="0" max = "2080"
-              placeholder={'Año del libro'} value={Año}
+              placeholder={'Ej: 1985'} value={Año}
               onChange={(e) => { setAño(Number(e.target.value)) }} required />
           </div>
 

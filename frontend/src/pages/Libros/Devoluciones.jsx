@@ -1,42 +1,55 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import api from '../../services/api'
 
 const BADGE = {
-  'No entregado': 'badge-no-entregado',
-  'Entregado':    'badge-entregado',
-  'Por entregar': 'badge-pendiente',
+  'Activo':        'badge-no-entregado',
+  'Por entregar':  'badge-pendiente',
+  'No entregado':  'badge-no-entregado',
+  'Devuelto':      'badge-entregado',
+  'Entregado':     'badge-entregado',
+  'Vencido':       'badge-no-entregado',
 }
-
 export default function Devoluciones() {
   const navigate = useNavigate()
-  const [form, setForm] = useState({ codigoCliente: '', nombreCliente: '' })
-  const [historial, setHistorial] = useState([
-    { fecha: '',  titulo: '', estado: '' }
-  ])
+  const [codigoCliente, setCodigoCliente] = useState('')
+  const [cliente, setCliente] = useState(null)
+  const [prestamos, setPrestamos] = useState([])
+  const [mensaje, setMensaje] = useState(null)
 
-  async function buscar(e) {
+  async function buscarCliente(e) {
     e.preventDefault()
-    const token = localStorage.getItem('token')
     try {
-      const res = await fetch(`/api/devoluciones?codigoCliente=${form.codigoCliente}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      const data = await res.json()
-      setHistorial(data.historial || [])
-      setForm(f => ({ ...f, nombreCliente: data.nombreCliente || '' }))
-    } catch {}
+      const { data } = await api.get(`ClientesCT/ConsultarPorCodigo?codigo=${codigoCliente}`)
+      if (data.id === 0) {
+        setCliente(null)
+        setPrestamos([])
+        setMensaje({ tipo: 'error', texto: 'Cliente no encontrado.' })
+        return
+      }
+      setCliente(data)
+      setMensaje(null)
+      const res = await api.get(`Prestamos/ListarPorCliente?idCliente=${data.id}`)
+      setPrestamos(res.data || [])
+    } catch {
+      setMensaje({ tipo: 'error', texto: 'Error al buscar cliente.' })
+    }
   }
 
-  async function entregar(titulo) {
-    const token = localStorage.getItem('token')
+  async function devolver(idPrestamo) {
     try {
-      await fetch('/api/devoluciones', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ codigoCliente: form.codigoCliente, titulo }),
-      })
-      setHistorial(h => h.map(i => i.titulo === titulo ? { ...i, estado: 'Entregado' } : i))
-    } catch {}
+      const { data } = await api.post(`Prestamos/Devolver?idPrestamo=${idPrestamo}`)
+      if (data.startsWith('Error')) {
+        setMensaje({ tipo: 'error', texto: data })
+      } else {
+        setMensaje({ tipo: 'exito', texto: data })
+        // Recargar préstamos
+        const res = await api.get(`Prestamos/ListarPorCliente?idCliente=${cliente.id}`)
+        setPrestamos(res.data || [])
+      }
+    } catch {
+      setMensaje({ tipo: 'error', texto: 'Error al registrar devolución.' })
+    }
   }
 
   return (
@@ -45,42 +58,62 @@ export default function Devoluciones() {
       <h2 style={{ marginBottom: 20 }}>Libros — Devoluciones</h2>
 
       <div className="card" style={{ maxWidth: 500, marginBottom: 20 }}>
-        <form onSubmit={buscar} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <form onSubmit={buscarCliente} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div className="campo">
             <label>Código del cliente:</label>
-            <input className="input" placeholder="(clave única del cliente)"
-              value={form.codigoCliente}
-              onChange={e => setForm({ ...form, codigoCliente: e.target.value })} />
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input className="input" placeholder="Ej: E57104F5"
+                value={codigoCliente} onChange={e => setCodigoCliente(e.target.value)} />
+              <button type="submit" className="btn btn-primario">🔍</button>
+            </div>
           </div>
           <div className="campo">
             <label>Nombre del cliente:</label>
-            <input className="input" value={form.nombreCliente} readOnly style={{ background: '#f5f0e8' }} />
+            <input className="input" value={cliente ? cliente.nombrecompleto : ''}
+              readOnly style={{ background: '#f5f0e8' }} />
           </div>
-          <button type="submit" className="btn btn-primario" style={{ alignSelf: 'flex-end' }}>Buscar</button>
         </form>
       </div>
+
+      {mensaje && (
+        <div style={{
+          padding: '8px 12px', borderRadius: 'var(--radio)', fontSize: 13, marginBottom: 16,
+          background: mensaje.tipo === 'exito' ? '#C8E6C9' : '#FFCDD2',
+          color: mensaje.tipo === 'exito' ? '#2E7D32' : '#B71C1C',
+        }}>
+          {mensaje.texto}
+        </div>
+      )}
 
       <div className="card">
         <table className="tabla">
           <thead>
             <tr>
-              <th>Fecha entregada / a entregar</th>
-              <th>Título</th>
+              <th>Id</th>
+              <th>Fecha préstamo</th>
+              <th>Fecha límite</th>
+              <th>Fecha devolución</th>
               <th>Estado</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {historial.map((h, i) => (
-              <tr key={i}>
-                <td>{h.fecha}</td>
-                <td>{h.titulo}</td>
-                <td><span className={`badge ${BADGE[h.estado] || ''}`}>{h.estado}</span></td>
+            {prestamos.length === 0 ? (
+              <tr><td colSpan={6} style={{ textAlign: 'center', color: 'var(--color-texto-suave)' }}>
+                {cliente ? 'Sin préstamos activos' : 'Busca un cliente para ver sus préstamos'}
+              </td></tr>
+            ) : prestamos.map(p => (
+              <tr key={p.id}>
+                <td>{p.id}</td>
+                <td>{p.fechaPrestamo}</td>
+                <td>{p.fechaLimite}</td>
+                <td>{p.fechaDevolucion || '—'}</td>
+                <td><span className={`badge ${BADGE[p.estado] || ''}`}>{p.estado}</span></td>
                 <td>
-                  {h.estado !== 'Entregado' && (
+                  {(p.estado === 'Activo' || p.estado === 'Por entregar' || p.estado === 'No entregado') && (
                     <button className="btn btn-acento" style={{ fontSize: 12 }}
-                      onClick={() => entregar(h.titulo)}>
-                      Entregar
+                      onClick={() => devolver(p.id)}>
+                      Devolver
                     </button>
                   )}
                 </td>

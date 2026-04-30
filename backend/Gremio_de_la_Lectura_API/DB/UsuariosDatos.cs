@@ -11,7 +11,7 @@ namespace Gremio_de_la_Lectura_API.DB{
             Usuario u;
             using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
                 try {
-                    var query = "SELECT id, usuario, rol, fecha_creacion " + "FROM Usuarios WHERE usuario = @nombre AND contrasena = @pwd";
+                    var query = "SELECT id, usuario, rol, fecha_creacion FROM Usuarios WHERE usuario = @nombre AND contraseña = @pwd";
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@nombre", nombre);
                     cmd.Parameters.AddWithValue("@pwd", pwd);
@@ -36,6 +36,7 @@ namespace Gremio_de_la_Lectura_API.DB{
                 catch(Exception ex) {
                     u = new Usuario();
                     u.Id = -1;
+                    u.usuario = "Error: " + ex.Message;
                 }
             }
             return u;
@@ -161,5 +162,26 @@ namespace Gremio_de_la_Lectura_API.DB{
 
         return respuesta;
         }
+        public static string RegistrarWeb(string usuario, string contrasena) {
+            string resultado = "";
+            try {
+                using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
+                    SqlCommand cmd = new SqlCommand("SP_REGISTRARUSUARIOWEB", oconexion);
+                    cmd.Parameters.AddWithValue("@usuario", usuario);
+                    cmd.Parameters.AddWithValue("@contrasena", contrasena);
+                    cmd.Parameters.Add("@IdResultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    oconexion.Open();
+                    cmd.ExecuteNonQuery();
+                    int id = Convert.ToInt32(cmd.Parameters["@IdResultado"].Value);
+                    if(id == -1) resultado = "Error: El usuario ya existe.";
+                    else resultado = "OK:" + id;
+                }
+            } catch(Exception ex) {
+                resultado = "Error: " + ex.Message;
+            }
+            return resultado;
+        }
+
     }
 }
