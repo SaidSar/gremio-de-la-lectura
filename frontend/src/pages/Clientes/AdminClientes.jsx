@@ -39,7 +39,7 @@ export default function AdminClientes() {
               <tr><td colSpan={8} style={{ textAlign: 'center', color: 'var(--color-texto-suave)' }}>Sin registros</td></tr>
             ) : clientes.map(c => (
               <tr key={c.Id} onClick={() => setSeleccionado(c)} style={{ cursor: 'pointer' }}>
-                <td>{c.codigo}</td>
+                <td>{c.id}</td>
                 <td>{c.nombrecompleto}</td>
                 <td>{c.telefono}</td>
                 <td>{c.correo}</td>
