@@ -180,3 +180,7 @@ h1, h2, h3 {
 .btn-regresar:hover {
   color: var(--color-primario);
 }
+
+.fila-seleccionada td {
+  background-color: #E8D5B0 !important;
+}

@@ -151,5 +151,49 @@ namespace Gremio_de_la_Lectura_API.DB {
             }
             return c;
         }
+        public static string Actualizar(Cliente c) {
+            string resultado = "";
+            try {
+                using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
+                    SqlCommand cmd = new SqlCommand("SP_REGISTRARCLIENTE", oconexion);
+                    cmd.Parameters.AddWithValue("@Id", c.Id);
+                    cmd.Parameters.AddWithValue("@Nombrecompleto", c.Nombrecompleto);
+                    cmd.Parameters.AddWithValue("@Telefono", c.Telefono);
+                    cmd.Parameters.AddWithValue("@Correo", c.Correo);
+                    cmd.Parameters.AddWithValue("@Direccion", c.Direccion);
+                    cmd.Parameters.Add("@IdResultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    oconexion.Open();
+                    cmd.ExecuteNonQuery();
+                    resultado = "Cliente actualizado con éxito.";
+                }
+            } catch(Exception ex) {
+                resultado = "Error: " + ex.Message;
+            }
+            return resultado;
+        }
+
+        public static string Eliminar(int idCliente) {
+            string resultado = "";
+            try {
+                using(SqlConnection oconexion = new SqlConnection(Conexion.DB())) {
+                    SqlCommand cmd = new SqlCommand("SP_ELIMINARCLIENTE", oconexion);
+                    cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+                    cmd.Parameters.Add("@Respuesta", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    oconexion.Open();
+                    cmd.ExecuteNonQuery();
+                    int respuesta = Convert.ToInt32(cmd.Parameters["@Respuesta"].Value);
+                    resultado = respuesta == 1
+                        ? "OK"
+                        : "Error: " + cmd.Parameters["@Mensaje"].Value.ToString();
+                }
+            } catch(Exception ex) {
+                resultado = "Error: " + ex.Message;
+            }
+            return resultado;
+        }
+
     }
 }

@@ -33,5 +33,17 @@ namespace Gremio_de_la_Lectura_API.Controllers {
             return ClientesDatos.ConsultarPorCodigo(codigo);
         }
 
+        [HttpPut]
+        [Route("Actualizar")]
+        public string Actualizar([FromBody] Cliente c) {
+            return ClientesDatos.Actualizar(c);
+        }
+
+        [HttpDelete]
+        [Route("Eliminar")]
+        public string Eliminar(int id) {
+            return ClientesDatos.Eliminar(id);
+        }
+
     }
 }
