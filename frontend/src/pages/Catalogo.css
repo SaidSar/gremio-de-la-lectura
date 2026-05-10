@@ -28,6 +28,20 @@
   background: transparent;
   color: var(--color-texto);
 }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background-image: url("/src/assets/GremioLogo.jpeg");
+  background-repeat: repeat;
+
+  background-size: 140px;
+  background-position: 80px 30px;
+  opacity: 0.09;
+  z-index: -1;
+  pointer-events: none;
+}
 
 .catalogo-notif {
   display: flex;
